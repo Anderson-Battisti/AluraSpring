@@ -1,6 +1,5 @@
-package battisti.anderson.alura_spring_lambdas_streams;
+package battisti.anderson.alura_spring_lambdas_streams.controller;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CountController
