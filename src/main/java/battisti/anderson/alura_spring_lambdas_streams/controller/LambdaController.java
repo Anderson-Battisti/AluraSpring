@@ -1,9 +1,10 @@
 package battisti.anderson.alura_spring_lambdas_streams.controller;
 
-import battisti.anderson.alura_spring_lambdas_streams.interfaces.IMultiplication;
-import battisti.anderson.alura_spring_lambdas_streams.interfaces.IPalindromeChecker;
-import battisti.anderson.alura_spring_lambdas_streams.interfaces.IPrimeNumber;
-import battisti.anderson.alura_spring_lambdas_streams.interfaces.IStringToUpperCaseConverter;
+import battisti.anderson.alura_spring_lambdas_streams.interfaces.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class LambdaController
 {
@@ -60,5 +61,43 @@ public class LambdaController
         };
 
         System.out.println( palindromeChecker.isPalindrome( "Ovo" ) );
+    }
+
+    public void multiplyArrayOfNumbers()
+    {
+        List<Integer> numbers = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+
+        numbers.replaceAll( n -> n * 3 );
+
+        System.out.println( numbers );
+    }
+
+    public void sortStrings()
+    {
+        List<String> strings = Arrays.asList( "Palavra", "Teste", "Computador", "Software", "Engenharia", "Análise" );
+        Collections.sort( strings );
+        System.out.println( strings );
+    }
+
+    public void divideNumbers()
+    {
+        IDivideNumbers divideNumbers = ( n1, n2 ) ->
+        {
+            if ( n2 == 0 ) throw new ArithmeticException( "Division by zero" );
+            return n1 / n2;
+        };
+
+        double n1 = 5.5;
+        double n2 = 0;
+
+        try
+        {
+            System.out.println( divideNumbers.divideNumbers( n1, n2 ) );
+        }
+
+        catch ( ArithmeticException e )
+        {
+            System.out.println( e.getMessage() );
+        }
     }
 }

@@ -39,5 +39,14 @@ public class ScreenmatchaluraApplication implements CommandLineRunner
 
 		//Module 2 Exercise 4
 		LambdaController.getInstance().palindromeChecker();
+
+		//Module 2 Exercise 5
+		LambdaController.getInstance().multiplyArrayOfNumbers();
+
+		//Module 2 Exercise 6
+		LambdaController.getInstance().sortStrings();
+
+		//Module 2 Exercise 7
+		LambdaController.getInstance().divideNumbers();
 	}
 }
