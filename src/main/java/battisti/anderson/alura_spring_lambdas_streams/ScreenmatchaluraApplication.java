@@ -2,6 +2,7 @@ package battisti.anderson.alura_spring_lambdas_streams;
 
 import battisti.anderson.alura_spring_lambdas_streams.controller.CountController;
 import battisti.anderson.alura_spring_lambdas_streams.controller.LambdaController;
+import battisti.anderson.alura_spring_lambdas_streams.controller.StreamController;
 import battisti.anderson.alura_spring_lambdas_streams.controller.TaskController;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -48,5 +49,27 @@ public class ScreenmatchaluraApplication implements CommandLineRunner
 
 		//Module 2 Exercise 7
 		LambdaController.getInstance().divideNumbers();
+
+
+		//Module 3 Exercise 1
+		StreamController.getInstance().filterNumbers();
+
+		//Module 3 Exercise 2
+		StreamController.getInstance().stringToUpperCase();
+
+		//Module 3 Exercise 3
+		StreamController.getInstance().oddNumbersMultiplicator();
+
+		//Module 3 Exercise 4
+		StreamController.getInstance().duplicatedRemover();
+
+		//Module 3 Exercise 5
+		StreamController.getInstance().primeNumberExtractor();
+
+		//Module 3 Exercise 6
+		StreamController.getInstance().getAdults();
+
+		//Module 3 Exercise 7 and 8
+		StreamController.getInstance().filterProducts();
 	}
 }
