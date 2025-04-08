@@ -71,5 +71,18 @@ public class ScreenmatchaluraApplication implements CommandLineRunner
 
 		//Module 3 Exercise 7 and 8
 		StreamController.getInstance().filterProducts();
+
+
+		//Module 4 Exercise 1
+		StreamController.getInstance().findBiggestNumber();
+
+		//Module 4 Exercise 2
+		StreamController.getInstance().groupByStringSize();
+
+		//Module 4 Exercise 3
+		StreamController.getInstance().concatenateStrings();
+
+		//Module 4 Exercise 4
+		StreamController.getInstance().calculateSumOfSquareOfEvenNumbers();
 	}
 }

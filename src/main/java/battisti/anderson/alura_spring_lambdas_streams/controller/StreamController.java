@@ -3,9 +3,8 @@ package battisti.anderson.alura_spring_lambdas_streams.controller;
 import battisti.anderson.alura_spring_lambdas_streams.model.Person;
 import battisti.anderson.alura_spring_lambdas_streams.model.Product;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StreamController
@@ -113,6 +112,50 @@ public class StreamController
                          .sorted( Comparator.comparingDouble( Product::getPrice ) )
                          .limit( 3 )
                          .forEach( System.out::println );
+    }
+
+    public void findBiggestNumber()
+    {
+        List<Integer> numbers = Arrays.asList( 10, 20, 30, 40, 50 );
+
+        Optional<Integer> biggestNumber = numbers.stream()
+                                                 .max( Integer::compare );
+
+        biggestNumber.ifPresent( System.out::println );
+    }
+
+    public void groupByStringSize()
+    {
+        List<String> words = Arrays.asList( "java",
+                                            "stream",
+                                            "lambda",
+                                            "code" );
+
+        Map<Integer, List<String>> wordsMap = words.stream()
+                                                   .collect( Collectors.groupingBy( String::length ) );
+
+        System.out.println( wordsMap );
+    }
+
+    public void concatenateStrings()
+    {
+        List<String> names = Arrays.asList( "Alice",
+                                            "Bob",
+                                            "Charlie" );
+
+        String result = names.stream().collect( Collectors.joining( ", " ) );
+
+        System.out.println( result );
+    }
+
+    public void calculateSumOfSquareOfEvenNumbers()
+    {
+        List<Integer> numbers = Arrays.asList( 1, 2, 3, 4, 5, 6 );
+
+        System.out.println( numbers.stream()
+                                   .filter( n -> n % 2 == 0 )
+                                   .map( n -> n * n )
+                                   .reduce( 0, Integer::sum ) );
     }
 
     private boolean isPrime( int number )
