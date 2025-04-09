@@ -1,9 +1,6 @@
 package battisti.anderson.alura_spring_lambdas_streams;
 
-import battisti.anderson.alura_spring_lambdas_streams.controller.CountController;
-import battisti.anderson.alura_spring_lambdas_streams.controller.LambdaController;
-import battisti.anderson.alura_spring_lambdas_streams.controller.StreamController;
-import battisti.anderson.alura_spring_lambdas_streams.controller.TaskController;
+import battisti.anderson.alura_spring_lambdas_streams.controller.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -84,5 +81,20 @@ public class ScreenmatchaluraApplication implements CommandLineRunner
 
 		//Module 4 Exercise 4
 		StreamController.getInstance().calculateSumOfSquareOfEvenNumbers();
+
+		//Module 4 Exercise 5
+		StreamController.getInstance().separateEvenAndOddNumbers();
+
+		//Module 4 Exercise 6
+		ProductController.getInstance().separateProductsByCategory();
+
+		//Module 4 Exercise 7
+		ProductController.getInstance().countProductsByCategory();
+
+		//Module 4 Exercise 8
+		ProductController.getInstance().identifyMostExpensiveProductOfEachCategory();
+
+		//Module 4 Exercise 9
+		ProductController.getInstance().sumPricesByCategory();
 	}
 }

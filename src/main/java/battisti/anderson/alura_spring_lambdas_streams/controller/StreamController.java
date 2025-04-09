@@ -158,6 +158,16 @@ public class StreamController
                                    .reduce( 0, Integer::sum ) );
     }
 
+    public void separateEvenAndOddNumbers()
+    {
+        List<Integer> numbers = Arrays.asList( 1, 2, 3, 4, 5, 6 );
+
+        Map<Boolean, List<Integer>> particionedNumbers = numbers.stream()
+                                                                .collect( Collectors.partitioningBy( n -> n % 2 != 0 ) );
+
+        System.out.println( particionedNumbers );
+    }
+
     private boolean isPrime( int number )
     {
         if ( number <= 1 ) return false;
