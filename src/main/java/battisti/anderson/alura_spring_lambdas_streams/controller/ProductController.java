@@ -13,7 +13,9 @@ public class ProductController
 
     public static ProductController getInstance()
     {
-        return productController == null ? new ProductController() : productController;
+        if ( productController == null ) productController = new  ProductController();
+
+        return productController;
     }
 
     public void separateProductsByCategory()
