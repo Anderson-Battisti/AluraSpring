@@ -6,15 +6,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FipeTableApplication implements CommandLineRunner
+public class FipeTableApplication
+        implements
+            CommandLineRunner
 {
-    public static void main(String[] args)
+    public static void main( String[] args )
     {
-        SpringApplication.run(FipeTableApplication.class, args);
+        SpringApplication.run( FipeTableApplication.class, args );
     }
 
     @Override
-    public void run(String... args)
+    public void run( String... args )
     {
         MenuController.getInstance().runMenu();
     }

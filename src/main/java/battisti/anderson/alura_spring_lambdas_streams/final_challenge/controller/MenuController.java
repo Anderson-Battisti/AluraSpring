@@ -1,5 +1,10 @@
 package battisti.anderson.alura_spring_lambdas_streams.final_challenge.controller;
 
+import battisti.anderson.alura_spring_lambdas_streams.final_challenge.JsonMappings.Brand;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuController
@@ -15,23 +20,30 @@ public class MenuController
 
     public void runMenu()
     {
-        Integer userChoice = null;
-        String  veihcleType = requireInput();
-        FipeApiController.makeRequest( veihcleType );
+        String  veihcleType = requireFirstInput();
+
+        String responseJson = FipeApiController.getInstance().makeRequest( veihcleType, FipeApiController.QueryType.VEHICLE_TYPE ).body();
+
+        ObjectMapper mapper = new ObjectMapper();
+        //todo
+        //List<Brand> brands = mapper.readValue( json,  );
     }
 
-    public String requireInput()
+    public String requireFirstInput()
     {
         Scanner reader        = new Scanner( System.in );
         String  vehicleChoice = null;
 
-        System.out.println( "Opções: Carros, Motos, Caminhoes" );
-        System.out.println( "\n Digite uma das opções para consultar valores: " );
+        System.out.println( "\nOpções: Carros, Motos, Caminhoes" );
+        System.out.println( "Digite uma das opções para consultar valores: " );
+
+        vehicleChoice = reader.nextLine().toLowerCase();
 
         while ( vehicleChoice == null || ( ! vehicleChoice.equals( "carros" ) &&
                                            ! vehicleChoice.equals( "motos" )  &&
                                            ! vehicleChoice.equals( "caminhoes" ) ) )
         {
+            System.out.println( "Opção inválida, digite novamente: " );
             vehicleChoice = reader.nextLine().toLowerCase();
         }
 

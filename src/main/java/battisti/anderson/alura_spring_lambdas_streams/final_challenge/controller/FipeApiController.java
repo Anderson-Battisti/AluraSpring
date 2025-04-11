@@ -7,8 +7,11 @@ import java.net.http.HttpResponse;
 
 public class FipeApiController
 {
-    private final String apiLink = "https://parallelum.com.br/fipe/api/v2/";
-    //private final String apiLink = "https://parallelum.com.br/fipe/api/v2/cars/fipe/001005-1";
+    private final String apiLink = "https://parallelum.com.br/fipe/api/v1/";
+    private final String brandLink = "/marcas";
+    private final String modelLink = "/modelos";
+
+    public enum QueryType { VEHICLE_TYPE, MODEL, YEAR }
 
     private static FipeApiController fipeApiController;
 
@@ -19,19 +22,31 @@ public class FipeApiController
         return fipeApiController;
     }
 
-    public void makeRequest( String veihcleType )
+    public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType )
     {
-        
+        return makeRequest( veihcleType, queryType, null );
     }
 
-    public HttpResponse<String> fetchFipeData( String vehicleType )
+    public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType, String model )
     {
+        return makeRequest( veihcleType, queryType, model, null );
+    }
+
+    public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType, String model, String year )
+    {
+        return fetchFipeData( veihcleType, queryType, model, year );
+    }
+
+    public HttpResponse<String> fetchFipeData( String vehicleType, QueryType queryType, String model, String year )
+    {
+        String link = composeApiLink( vehicleType, queryType );
+
         try
         {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()
-                                             .uri( URI.create( apiLink + vehicleType ) )
+                                             .uri(URI.create(apiLink + vehicleType + brandLink))
                                              .build();
 
             return client.send( request, HttpResponse.BodyHandlers.ofString() );
@@ -43,5 +58,11 @@ public class FipeApiController
 
             return null;
         }
+    }
+
+    public String composeApiLink( String vehicleType, QueryType queryType )
+    {
+        return queryType == QueryType.VEHICLE_TYPE ? apiLink + vehicleType + brandLink
+                                                   : null;
     }
 }
