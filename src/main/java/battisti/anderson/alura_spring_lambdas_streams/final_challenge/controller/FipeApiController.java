@@ -7,11 +7,12 @@ import java.net.http.HttpResponse;
 
 public class FipeApiController
 {
-    private final String apiLink = "https://parallelum.com.br/fipe/api/v1/";
+    private final String apiLink   = "https://parallelum.com.br/fipe/api/v1/";
     private final String brandLink = "/marcas";
     private final String modelLink = "/modelos";
+    private final String yearLink  = "/years";
 
-    public enum QueryType { VEHICLE_TYPE, MODEL, YEAR }
+    public enum QueryType { VEHICLE, BRAND, MODEL, YEAR }
 
     private static FipeApiController fipeApiController;
 
@@ -24,29 +25,29 @@ public class FipeApiController
 
     public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType )
     {
-        return makeRequest( veihcleType, queryType, null );
+        return makeRequest( veihcleType, null, queryType );
     }
 
-    public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType, String model )
+    public HttpResponse<String> makeRequest( String veihcleType, String brandCode, QueryType queryType )
     {
-        return makeRequest( veihcleType, queryType, model, null );
+        return makeRequest( veihcleType, brandCode, null, queryType );
     }
 
-    public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType, String model, String year )
+    public HttpResponse<String> makeRequest( String veihcleType, String brandCode, String year, QueryType queryType )
     {
-        return fetchFipeData( veihcleType, queryType, model, year );
+        return fetchFipeData( veihcleType, brandCode, year, queryType );
     }
 
-    public HttpResponse<String> fetchFipeData( String vehicleType, QueryType queryType, String model, String year )
+    public HttpResponse<String> fetchFipeData( String vehicleType, String brandCode, String year, QueryType queryType )
     {
-        String link = composeApiLink( vehicleType, queryType );
+        String link = composeApiLink( vehicleType, brandCode, year, queryType );
 
         try
         {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()
-                                             .uri(URI.create(apiLink + vehicleType + brandLink))
+                                             .uri( URI.create( link ) )
                                              .build();
 
             return client.send( request, HttpResponse.BodyHandlers.ofString() );
@@ -60,9 +61,11 @@ public class FipeApiController
         }
     }
 
-    public String composeApiLink( String vehicleType, QueryType queryType )
+    public String composeApiLink( String vehicleType, String brandCode, String choosedYear, QueryType queryType )
     {
-        return queryType == QueryType.VEHICLE_TYPE ? apiLink + vehicleType + brandLink
-                                                   : null;
+        return queryType == QueryType.VEHICLE ? apiLink + vehicleType + brandLink                                            :
+               queryType == QueryType.MODEL   ? apiLink + vehicleType + brandLink + "/" + brandCode + modelLink              :
+               queryType == QueryType.YEAR    ? apiLink + vehicleType + brandLink + "/" + brandCode + "/anos/" + choosedYear :
+                                                null;
     }
 }
