@@ -19,4 +19,10 @@ public class Year
     {
         return name;
     }
+
+    @Override
+    public String toString()
+    {
+        return "[ Código: " + this.code + ", Nome: " + this.name + " ]";
+    }
 }

@@ -6,6 +6,7 @@ public class Brand
 {
     @JsonProperty( "codigo" )
     private String code;
+
     @JsonProperty( "nome" )
     private String name;
 

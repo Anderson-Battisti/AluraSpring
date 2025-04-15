@@ -1,8 +1,8 @@
 package battisti.anderson.alura_spring_lambdas_streams.final_challenge.controller;
 
 import battisti.anderson.alura_spring_lambdas_streams.final_challenge.JsonMappings.Brand;
+import battisti.anderson.alura_spring_lambdas_streams.final_challenge.JsonMappings.FipeResponse;
 import battisti.anderson.alura_spring_lambdas_streams.final_challenge.JsonMappings.Model;
-import battisti.anderson.alura_spring_lambdas_streams.final_challenge.JsonMappings.Vehicle;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,9 +38,9 @@ public class MenuController
 
         String brandCode = requireBrandCode( brands );
 
-        List<Model> models = getListOfModels( FipeApiController.getInstance()
-                                                               .makeRequest( vehicleType, brandCode, FipeApiController.QueryType.MODEL )
-                                                               .body() );
+        FipeResponse models = getFipeResponseObject( FipeApiController.getInstance()
+                                                                      .makeRequest( vehicleType, brandCode, FipeApiController.QueryType.MODEL )
+                                                                      .body() );
 
         if ( models == null )
         {
@@ -49,10 +49,18 @@ public class MenuController
 
         printsEachItem( models );
 
-        /*String modelCode = requireModelCode( models );
+        String modelCode = requireVehicleCode( models );
 
-        List<Vehicle> vehicles =
-        //todo the rest*/
+        List<Model> modelsOfEachYear = getListOfModels( FipeApiController.getInstance()
+                                                                         .makeRequest( vehicleType, brandCode, modelCode, FipeApiController.QueryType.YEAR )
+                                                                         .body() );
+
+        if ( modelsOfEachYear == null )
+        {
+            return;
+        }
+
+        printInfoOfEachVehicle( vehicleType, brandCode, modelCode, FipeApiController.QueryType.FINAL, modelsOfEachYear );
     }
 
     public String requireVehicleType()
@@ -61,8 +69,8 @@ public class MenuController
 
         String vehicleChoice = null;
 
-        System.out.println( "\nOpções: Carros, Motos, Caminhoes" );
-        System.out.println( "Digite uma das opções para consultar valores: " );
+        System.out.println( "\nDigite uma das opções para consultar valores: " );
+        System.out.println( "Opções: Carros, Motos, Caminhoes" );
 
         vehicleChoice = reader.nextLine().toLowerCase();
 
@@ -96,16 +104,16 @@ public class MenuController
         return code[0];
     }
 
-    private String requireModelCode( List<Model> models )
+    private String requireVehicleCode( FipeResponse models )
     {
         Scanner reader = new Scanner( System.in );
 
         final String[] code = new String[1];
 
-        System.out.println( "Escolha o código do modelo que deseja visualizar: " );
+        System.out.println( "Escolha o código do veículo que deseja visualizar: " );
         code[0] = reader.nextLine();
 
-        while ( models.stream().noneMatch( b -> b.getCode().equals( code[0] ) ) )
+        while ( models.getModels().stream().noneMatch( b -> b.getCode().equals( code[0] ) ) )
         {
             System.out.println( "Código inválido, digite novamente: " );
             code[0] = reader.nextLine();
@@ -120,9 +128,7 @@ public class MenuController
         {
             ObjectMapper mapper = new ObjectMapper();
 
-            List<Brand> brands = mapper.readValue( json, new TypeReference<>() {} );
-
-            return brands;
+            return mapper.readValue( json, new TypeReference<>() {} );
         }
 
         catch ( JsonProcessingException e )
@@ -139,9 +145,7 @@ public class MenuController
         {
             ObjectMapper mapper = new ObjectMapper();
 
-            List<Model> models = mapper.readValue( json, new TypeReference<>() {} );
-
-            return models;
+            return mapper.readValue( json, new TypeReference<>() {} );
         }
 
         catch ( JsonProcessingException e )
@@ -152,15 +156,30 @@ public class MenuController
         }
     }
 
-    private List<Model> getListOfVehicles( String json )
+    private Model getModelByJson( String json )
     {
         try
         {
             ObjectMapper mapper = new ObjectMapper();
 
-            List<Model> vehicles = mapper.readValue( json, new TypeReference<>() {} );
+            return mapper.readValue( json, new TypeReference<>() {} );
+        }
 
-            return vehicles;
+        catch ( JsonProcessingException e )
+        {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    private FipeResponse getFipeResponseObject( String json )
+    {
+        try
+        {
+            ObjectMapper mapper = new ObjectMapper();
+
+            return mapper.readValue( json, new TypeReference<>() {} );
         }
 
         catch ( JsonProcessingException e )
@@ -177,5 +196,25 @@ public class MenuController
         {
             System.out.println( item );
         }
+    }
+
+    public void printsEachItem( FipeResponse models )
+    {
+        System.out.println( "Modelos: " );
+
+        models.getModels().forEach( System.out::println );
+    }
+
+    public void printInfoOfEachVehicle( String vehicleType, String brandCode, String modelCode, FipeApiController.QueryType queryType, List<Model> models )
+    {
+        models.stream()
+              .map( m -> m.getCode() )
+              .map( c -> FipeApiController.getInstance()
+                                          .makeRequest( vehicleType, brandCode, modelCode, c, queryType )
+                                          .body() )
+              .map( this::getModelByJson ).forEach( m -> System.out.println( "\n Modelo: " + m.getName()      +
+                                                                             "\n Ano: "    + m.getYearModel() +
+                                                                             "\n Preço: "  + m.getPrice() ) );
+
     }
 }

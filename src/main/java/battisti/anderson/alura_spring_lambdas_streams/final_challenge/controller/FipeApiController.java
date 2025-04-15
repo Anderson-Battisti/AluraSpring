@@ -7,12 +7,7 @@ import java.net.http.HttpResponse;
 
 public class FipeApiController
 {
-    private final String apiLink   = "https://parallelum.com.br/fipe/api/v1/";
-    private final String brandLink = "/marcas";
-    private final String modelLink = "/modelos";
-    private final String yearLink  = "/years";
-
-    public enum QueryType { VEHICLE, BRAND, MODEL, YEAR }
+    public enum QueryType { VEHICLE, MODEL, YEAR, FINAL }
 
     private static FipeApiController fipeApiController;
 
@@ -23,24 +18,29 @@ public class FipeApiController
         return fipeApiController;
     }
 
-    public HttpResponse<String> makeRequest( String veihcleType, QueryType queryType )
+    public HttpResponse<String> makeRequest( String vehicleType, QueryType queryType )
     {
-        return makeRequest( veihcleType, null, queryType );
+        return makeRequest( vehicleType, null, queryType );
     }
 
-    public HttpResponse<String> makeRequest( String veihcleType, String brandCode, QueryType queryType )
+    public HttpResponse<String> makeRequest( String vehicleType, String brandCode, QueryType queryType )
     {
-        return makeRequest( veihcleType, brandCode, null, queryType );
+        return makeRequest( vehicleType, brandCode, null, queryType );
     }
 
-    public HttpResponse<String> makeRequest( String veihcleType, String brandCode, String year, QueryType queryType )
+    public HttpResponse<String> makeRequest( String vehicleType, String brandCode, String modelCode, QueryType queryType )
     {
-        return fetchFipeData( veihcleType, brandCode, year, queryType );
+        return makeRequest( vehicleType, brandCode, modelCode, null, queryType );
     }
 
-    public HttpResponse<String> fetchFipeData( String vehicleType, String brandCode, String year, QueryType queryType )
+    public HttpResponse<String> makeRequest( String vehicleType, String brandCode, String modelCode, String finalCode, QueryType queryType )
     {
-        String link = composeApiLink( vehicleType, brandCode, year, queryType );
+        return fetchFipeData( vehicleType, brandCode, modelCode, finalCode, queryType );
+    }
+
+    public HttpResponse<String> fetchFipeData( String vehicleType, String brandCode, String modelCode, String finalCode, QueryType queryType )
+    {
+        String link = composeApiLink( vehicleType, brandCode, modelCode, finalCode, queryType );
 
         try
         {
@@ -61,11 +61,17 @@ public class FipeApiController
         }
     }
 
-    public String composeApiLink( String vehicleType, String brandCode, String choosedYear, QueryType queryType )
+    public String composeApiLink( String vehicleType, String brandCode, String modelCode, String finalCode, QueryType queryType )
     {
-        return queryType == QueryType.VEHICLE ? apiLink + vehicleType + brandLink                                            :
-               queryType == QueryType.MODEL   ? apiLink + vehicleType + brandLink + "/" + brandCode + modelLink              :
-               queryType == QueryType.YEAR    ? apiLink + vehicleType + brandLink + "/" + brandCode + "/anos/" + choosedYear :
+        final String apiLink   = "https://parallelum.com.br/fipe/api/v1/";
+        final String brandLink = "/marcas";
+        final String modelLink = "/modelos";
+        final String yearLink  = "/anos";
+
+        return queryType == QueryType.VEHICLE ? apiLink + vehicleType + brandLink                                                                              :
+               queryType == QueryType.MODEL   ? apiLink + vehicleType + brandLink + "/" + brandCode + modelLink                                                :
+               queryType == QueryType.YEAR    ? apiLink + vehicleType + brandLink + "/" + brandCode + modelLink + "/" + modelCode + yearLink                   :
+               queryType == QueryType.FINAL   ? apiLink + vehicleType + brandLink + "/" + brandCode + modelLink + "/" + modelCode + yearLink + "/" + finalCode :
                                                 null;
     }
 }
