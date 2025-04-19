@@ -1,6 +1,7 @@
 package battisti.anderson.alura_data_persistance_and_queries_spring;
 
 import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ChatGptRequestController;
+import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ModuleOneExercises;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
@@ -17,5 +18,11 @@ public class AluraDataPersistanceAndQueries
     public void run( String... args ) throws Exception
     {
         ChatGptRequestController.getInstance().translateTextByAI();
+
+        //Module 1 Exercise 1
+        ModuleOneExercises.getInstance().convertStringToNumber();
+
+        //Module 1 Exercise 3
+        ModuleOneExercises.getInstance().printFirstAndLastName();
     }
 }

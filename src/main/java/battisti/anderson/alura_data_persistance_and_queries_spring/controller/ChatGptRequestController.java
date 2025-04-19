@@ -12,23 +12,27 @@ public class ChatGptRequestController
 
     public static ChatGptRequestController getInstance()
     {
-        if ( instance == null )
-        {
-            return new ChatGptRequestController();
-        }
+        if ( instance == null ) instance = new ChatGptRequestController();
 
         return instance;
     }
 
     public void translateTextByAI()
     {
-        Scanner reader = new Scanner( System.in );
+        try
+        {
+            Scanner reader = new Scanner( System.in );
 
-        System.out.println( "Write a text to be translated to portuguese by AI: " );
-        String text = reader.nextLine();
+            System.out.println( "Write a text to be translated to portuguese by AI: " );
+            String text = reader.nextLine();
 
-        String tralnslatedText = ChatGptApiConsumer.getTradution( text );
+            String translatedText = ChatGptApiConsumer.getTradution( text );
 
-        System.out.println( "Translated text: " + tralnslatedText );
+            System.out.println( "Translated text: " + translatedText );
+        }
+        catch ( Exception e )
+        {
+            System.out.println( e.getMessage() );
+        }
     }
 }
