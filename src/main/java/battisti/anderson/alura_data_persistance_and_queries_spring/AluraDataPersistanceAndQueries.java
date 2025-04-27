@@ -4,7 +4,9 @@ import battisti.anderson.alura_data_persistance_and_queries_spring.controller.Ch
 import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ModuleOneExercises;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class AluraDataPersistanceAndQueries
     implements
         CommandLineRunner
