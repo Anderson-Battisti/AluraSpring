@@ -16,6 +16,7 @@ target/
 ### Files to be ignored (dev team)
 src/main/resources/application.properties
 C:\Users\ander\Documents\JavaProjects\AluraSpring\src\main\resources\application.properties
+src/main/resources/*.properties
 
 ### IntelliJ IDEA ###
 .idea
