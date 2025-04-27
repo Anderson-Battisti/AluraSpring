@@ -13,6 +13,10 @@ target/
 .springBeans
 .sts4-cache
 
+### Files to be ignored (dev team)
+src/main/resources/application.properties
+C:\Users\ander\Documents\JavaProjects\AluraSpring\src\main\resources\application.properties
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
