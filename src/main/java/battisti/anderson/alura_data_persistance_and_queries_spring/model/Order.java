@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table( name = "orders" )
 public class Order
 {
     @Id
@@ -13,6 +14,13 @@ public class Order
 
     @Column( nullable = false )
     private LocalDate date;
+
+    protected Order() {}
+
+    public Order( LocalDate date )
+    {
+        this.date = date;
+    }
 
     public Long getId()
     {
