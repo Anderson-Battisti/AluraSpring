@@ -2,6 +2,8 @@ package battisti.anderson.alura_data_persistance_and_queries_spring.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Product
 {
@@ -14,6 +16,14 @@ public class Product
 
     @Column( name = "value" )
     private double price;
+
+    @ManyToOne( fetch = FetchType.EAGER )
+    @JoinColumn( name = "category_id" )
+    private Category category;
+
+    @ManyToMany( fetch = FetchType.EAGER )
+    @JoinTable( name = "order_product", joinColumns = @JoinColumn( name = "product_id" ), inverseJoinColumns = @JoinColumn( "order_id" ) )
+    private List<Order> orders;
 
     protected Product() {}
 

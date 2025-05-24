@@ -2,6 +2,8 @@ package battisti.anderson.alura_data_persistance_and_queries_spring.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Category
 {
@@ -11,6 +13,9 @@ public class Category
 
     @Column( nullable = false, unique = true )
     private String name;
+
+    @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
+    private List<Product> products;
 
     protected Category() {}
 

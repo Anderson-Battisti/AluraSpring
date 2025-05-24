@@ -3,6 +3,7 @@ package battisti.anderson.alura_data_persistance_and_queries_spring.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table( name = "orders" )
@@ -14,6 +15,9 @@ public class Order
 
     @Column( nullable = false )
     private LocalDate date;
+
+    @ManyToMany( fetch = FetchType.EAGER, mappedBy = "products" )
+    private List<Product> products;
 
     protected Order() {}
 
