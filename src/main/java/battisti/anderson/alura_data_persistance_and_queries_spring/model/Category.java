@@ -14,9 +14,6 @@ public class Category
     @Column( nullable = false, unique = true )
     private String name;
 
-    @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
-    private List<Product> products;
-
     protected Category() {}
 
     public Category( String name )

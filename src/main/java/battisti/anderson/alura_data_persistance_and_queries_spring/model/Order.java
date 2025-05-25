@@ -16,7 +16,7 @@ public class Order
     @Column( nullable = false )
     private LocalDate date;
 
-    @ManyToMany( fetch = FetchType.EAGER, mappedBy = "products" )
+    @ManyToMany( fetch = FetchType.EAGER, mappedBy = "orders" )
     private List<Product> products;
 
     protected Order() {}

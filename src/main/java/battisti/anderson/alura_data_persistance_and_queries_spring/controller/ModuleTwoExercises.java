@@ -25,13 +25,53 @@ public class ModuleTwoExercises
 
     public void createAndSaveEachObjectInDatabase()
     {
-        Product product = new Product( "Smartphone", 1550.99 );
-        productRepository.save( product );
+        try
+        {
+            Product smartphone = new Product( "Smartphone", 1550.99 );
+            saveProductIfNotAlreadyAdded( smartphone );
 
-        Category category = new Category( "Electronics" );
-        categoryRepository.save( category );
+            Product computer = new Product( "Computer", 2000 );
+            saveProductIfNotAlreadyAdded( computer );
 
-        Order order = new Order( LocalDate.now() );
-        orderRepository.save( order );
+            Product mouse = new Product( "Mouse", 150.50 );
+            saveProductIfNotAlreadyAdded( mouse );
+
+            Category category = new Category( "Electronics" );
+            saveCategoryIfNotAlreadyAdded( category );
+
+            Order order = new Order( LocalDate.now() );
+            orderRepository.save( order );
+        }
+
+        catch ( Exception e )
+        {
+            System.out.println( "The product already exist in the database. It was ignored." );
+        }
+    }
+
+    private void saveProductIfNotAlreadyAdded( Product product )
+    {
+        try
+        {
+            productRepository.save( product );
+        }
+
+        catch ( Exception e )
+        {
+            System.out.println( "The product already exist in the database. It was ignored." );
+        }
+    }
+
+    public void saveCategoryIfNotAlreadyAdded( Category category )
+    {
+        try
+        {
+            categoryRepository.save( category );
+        }
+
+        catch ( Exception e )
+        {
+            System.out.println( "The category already exist in the database. It was ignored." );
+        }
     }
 }

@@ -1,6 +1,7 @@
 package battisti.anderson.alura_data_persistance_and_queries_spring;
 
 import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ChatGptRequestController;
+import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ModuleFourExercises;
 import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ModuleOneExercises;
 import battisti.anderson.alura_data_persistance_and_queries_spring.controller.ModuleTwoExercises;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class AluraDataPersistanceAndQueries
 {
     @Autowired
     private ModuleTwoExercises moduleTwoExercises;
+
+    @Autowired
+    private ModuleFourExercises moduleFourExercises;
 
     public static void main( String[] args )
     {
@@ -34,5 +38,20 @@ public class AluraDataPersistanceAndQueries
 
         //Module 2 Exercise 8
         moduleTwoExercises.createAndSaveEachObjectInDatabase();
+
+        //Module 4
+        moduleFourExercises.createAndSaveCategory();
+
+        //Module 4 Exercise 1
+        moduleFourExercises.showProductsByName();
+
+        //Module 4 Exercise 2
+        moduleFourExercises.showProductsByCategory();
+
+        //Module 4 Exercise 3
+        moduleFourExercises.showProductsByPriceGreaterThanValue();
+
+        //Module 4 Exercise 4
+        moduleFourExercises.showProductsByPriceLessThanValue();
     }
 }

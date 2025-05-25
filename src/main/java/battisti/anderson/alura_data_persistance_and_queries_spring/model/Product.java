@@ -22,7 +22,9 @@ public class Product
     private Category category;
 
     @ManyToMany( fetch = FetchType.EAGER )
-    @JoinTable( name = "order_product", joinColumns = @JoinColumn( name = "product_id" ), inverseJoinColumns = @JoinColumn( "order_id" ) )
+    @JoinTable( name               = "order_product",
+                joinColumns        = @JoinColumn( name = "product_id" ),
+                inverseJoinColumns = @JoinColumn( name = "order_id" ) )
     private List<Order> orders;
 
     protected Product() {}
@@ -46,5 +48,11 @@ public class Product
     public double getPrice()
     {
         return price;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
     }
 }

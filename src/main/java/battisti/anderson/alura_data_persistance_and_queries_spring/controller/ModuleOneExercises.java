@@ -19,17 +19,17 @@ public class ModuleOneExercises
         List<String> input = Arrays.asList( "10", "abc", "20", "30x" );
 
         input.stream().filter( n ->
-                               {
-                                   try
-                                   {
-                                       Integer.parseInt( n );
-                                       return true;
-                                   }
-                                   catch ( NumberFormatException e )
-                                   {
-                                       return false;
-                                   }
-                               }).forEach( System.out::println );
+        {
+            try
+            {
+                Integer.parseInt( n );
+                return true;
+            }
+            catch ( NumberFormatException e )
+            {
+                return false;
+            }
+        }).forEach( System.out::println );
     }
 
     public void printFirstAndLastName()
