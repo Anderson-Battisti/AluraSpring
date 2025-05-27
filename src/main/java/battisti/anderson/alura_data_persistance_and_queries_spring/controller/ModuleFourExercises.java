@@ -130,4 +130,50 @@ public class ModuleFourExercises
             products.forEach( System.out::println );
         }
     }
+
+    public void showProductsByNameContaining()
+    {
+        Scanner reader = new Scanner( System.in );
+
+        System.out.println( "Enter a part of the name to fetch the products: " );
+
+        String productName = reader.nextLine();
+
+        List<Product> products = productRepository.findByNameContainingIgnoreCase( productName );
+
+        if ( products.isEmpty() )
+        {
+            System.out.println( "No products were found containing this text: " + productName );
+        }
+
+        else
+        {
+            System.out.println( "Products found: " );
+
+            products.forEach( System.out::println );
+        }
+    }
+
+    public void showProductByCategoryOrdeningByAscPrice()
+    {
+        Scanner reader = new Scanner( System.in );
+
+        System.out.println( "Enter the category to fetch the products: " );
+
+        String categoryName = reader.nextLine();
+
+        List<Product> products = productRepository.findByCategoryOrderByPriceAsc( categoryName );
+
+        if ( products.isEmpty() )
+        {
+            System.out.println( "No products were found for the category: " + categoryName );
+        }
+
+        else
+        {
+            System.out.println( "Products found: " );
+
+            products.forEach( System.out::println );
+        }
+    }
 }

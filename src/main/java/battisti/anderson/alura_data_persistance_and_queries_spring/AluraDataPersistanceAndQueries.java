@@ -53,5 +53,11 @@ public class AluraDataPersistanceAndQueries
 
         //Module 4 Exercise 4
         moduleFourExercises.showProductsByPriceLessThanValue();
+
+        //Module 4 Exercise 5
+        moduleFourExercises.showProductsByNameContaining();
+
+        //Module 4 Exercise 8
+        moduleFourExercises.showProductByCategoryOrdeningByAscPrice();
     }
 }
