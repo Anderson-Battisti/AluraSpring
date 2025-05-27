@@ -176,4 +176,69 @@ public class ModuleFourExercises
             products.forEach( System.out::println );
         }
     }
+
+    public void showProductByCategoryOrdeningByPriceDesc()
+    {
+        Scanner reader = new Scanner( System.in );
+
+        System.out.println( "Enter the category to fetch the products: " );
+
+        String categoryName = reader.nextLine();
+
+        List<Product> products = productRepository.findByCategoryOrderByPriceDesc( categoryName );
+
+        if ( products.isEmpty() )
+        {
+            System.out.println( "No products were found for the category: " + categoryName );
+        }
+
+        else
+        {
+            System.out.println( "Products found: " );
+
+            products.forEach( System.out::println );
+        }
+    }
+
+    public void showProductCountByCategory()
+    {
+        Scanner reader = new Scanner(System.in);
+
+        System.out.println( "Enter the category to count the products: " );
+
+        String categoryName = reader.nextLine();
+
+        Integer productCount = productRepository.countByCategory( categoryName );
+
+        if ( productCount == null )
+        {
+            System.out.println( "No products were found for the category: " + categoryName );
+        }
+
+        else
+        {
+            System.out.println("Products found in this category: " + productCount );
+        }
+    }
+
+    public void showProductCountByPriceGreaterThan()
+    {
+        Scanner reader = new Scanner( System.in );
+
+        System.out.println( "Enter minimum price to count the products: " );
+
+        double minPrice = reader.nextDouble();
+
+        Integer productsCount = productRepository.countByPriceGreaterThan( minPrice );
+
+        if ( productsCount == null )
+        {
+            System.out.println( "No products were found bellow this price: " + minPrice );
+        }
+
+        else
+        {
+            System.out.println( "Products above this price: " + productsCount );
+        }
+    }
 }
